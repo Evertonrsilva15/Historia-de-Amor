@@ -1,343 +1,45 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#160d16">
-<meta name="version" content="2 meses Rev3 — index_3">
-<title>2 Meses de nós ♡</title>
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Caveat:wght@500;700&family=Jost:wght@300;400;500&display=swap');
-
-  :root{
-    --bg:#fbf3ec; --bg2:#f2d9dc; --surface:rgba(255,255,255,.72);
-    --ink:#4a3238; --heading:#3a2233; --accent:#8c3b4a; --accent2:#c77b8a;
-    --gold:#c9a15a; --soft:#efc9ce; --shadow:rgba(58,34,51,.18);
-    --glow:rgba(199,123,138,.22);
-  }
-  body.dark{
-    --bg:#0b080d; --bg2:#1b0e18; --surface:rgba(30,18,29,.72);
-    --ink:#eadde3; --heading:#fff4f7; --accent:#e27b91; --accent2:#a94e67;
-    --gold:#d6b36c; --soft:#5a2639; --shadow:rgba(0,0,0,.55);
-    --glow:rgba(201,89,119,.18);
-  }
-
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--bg); color:var(--ink); font-family:'Jost',sans-serif;
-    overflow-x:hidden; transition:background .7s ease,color .5s ease;
-  }
-  ::selection{background:var(--soft);color:var(--heading)}
-
-  /* Theme button */
-  .theme-toggle{
-    position:fixed;right:18px;top:18px;z-index:1001;
-    width:48px;height:48px;border:1px solid rgba(255,255,255,.18);
-    border-radius:50%;cursor:pointer;background:rgba(20,12,19,.48);
-    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-    color:#fff;font-size:1.15rem;box-shadow:0 8px 30px rgba(0,0,0,.18);
-    transition:transform .25s ease,background .4s ease;
-  }
-  .theme-toggle:hover{transform:scale(1.08)}
-  .theme-toggle:active{transform:scale(.96)}
-  body:not(.dark) .theme-toggle{background:rgba(140,59,74,.12);color:var(--accent);border-color:rgba(140,59,74,.15)}
-  .theme-toggle .sun{display:none}
-  body.dark .theme-toggle .moon{display:none}
-  body.dark .theme-toggle .sun{display:inline}
-
-  .progress-track{position:fixed;top:0;left:0;width:100%;height:3px;z-index:1000;background:rgba(140,59,74,.08)}
-  .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent2),var(--gold),var(--accent));transition:width .1s linear}
-
-  .ambient-particles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
-  .ambient-particle{position:absolute;top:-8vh;left:var(--left);font-size:var(--size);opacity:0;animation:ambientFall var(--duration) linear var(--delay) infinite;will-change:transform,opacity}
-  body.dark .ambient-particle{color:#d94d69;text-shadow:0 0 12px rgba(217,77,105,.18)}
-  body:not(.dark) .ambient-particle{width:var(--size);height:calc(var(--size) * .78);border-radius:0 100% 0 100%;background:var(--accent2);opacity:0;transform:rotate(35deg);box-shadow:0 0 10px rgba(199,123,138,.12)}
-  body.dark .ambient-particle::before{content:'♥'}
-  body:not(.dark) .ambient-particle::before{content:''}
-  @keyframes ambientFall{0%{opacity:0;transform:translate3d(0,-8vh,0) rotate(0deg)}12%{opacity:.5}88%{opacity:.38}100%{opacity:0;transform:translate3d(var(--drift),108vh,0) rotate(var(--rotation))}}
-
-  .petal{position:absolute;border-radius:0 100% 0 100%;background:var(--soft);opacity:.5;animation:floatPetal linear infinite;z-index:-1}
-  @keyframes floatPetal{from{transform:translateY(-10vh) rotate(0)}to{transform:translateY(110vh) rotate(360deg)}}
-
-  .hero-title{letter-spacing:.01em;}
-  .hero-title .number{
-    /* TAMANHO DO NÚMERO 2 — altere este valor para ajustar */
-    font-size:1.69em;
-    display:inline-block;
-    line-height:.8;
-    /* color: #8c3b4a;*/
-    background: linear-gradient(180deg, #f9b7c9, #8c3b4a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  }
-  .hero-title .months{font-size:1.05em;letter-spacing:.045em;display:inline-block;line-height:.9;}
-  .hero-title .dream{display:block;margin-top:.28em;font-size:.43em;line-height:1.05;font-weight:400;letter-spacing:.015em;}
-
-  /* HERO */
-  .hero{
-    min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;position:relative;padding:2rem 1.5rem;overflow:hidden;
-    background:
-      radial-gradient(circle at 18% 18%,var(--glow),transparent 32%),
-      radial-gradient(circle at 84% 76%,rgba(201,161,90,.12),transparent 28%),
-      linear-gradient(135deg,var(--bg),var(--bg2));
-    isolation:isolate;
-  }
-  .hero::after{content:"";position:absolute;inset:0;z-index:-1;opacity:.18;background:radial-gradient(circle at 50% 50%,transparent 0 35%,rgba(0,0,0,.2) 100%);pointer-events:none}
-  .hero-eyebrow{font-family:'Caveat',cursive;font-size:clamp(1.35rem,3vw,1.8rem);color:var(--accent);letter-spacing:.02em;opacity:0;animation:fadeUp 1s ease forwards .2s}
-  .hero-title{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(3.1rem,11vw,6.5rem);line-height:.9;color:var(--heading);margin:.4rem 0 1rem;opacity:0;animation:fadeUp 1s ease forwards .45s}
-  .hero-title em{font-style:italic;color:var(--accent)}
-  .hero-sub{font-weight:300;font-size:clamp(.95rem,2vw,1.15rem);letter-spacing:.04em;color:var(--ink);max-width:34ch;opacity:0;animation:fadeUp 1s ease forwards .7s}
-  .hero-badge{margin-top:1.6rem;padding:.45rem .9rem;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:999px;color:var(--accent);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;background:color-mix(in srgb,var(--surface) 72%,transparent);backdrop-filter:blur(8px);opacity:0;animation:fadeUp 1s ease forwards .95s}
-  .hero-scroll{position:absolute;bottom:2rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:fadeUp 1s ease forwards 1.3s}
-  .hero-scroll span{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent2)}
-  .hero-scroll .line{width:1px;height:34px;background:linear-gradient(var(--accent2),transparent);animation:pulseLine 1.8s ease-in-out infinite}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes pulseLine{0%,100%{opacity:.3}50%{opacity:1}}
-
-  /* COUNTER */
-  .counter-section{position:relative;isolation:isolate;z-index:6;overflow:hidden;padding:5.5rem 1.5rem 6.5rem;text-align:center;position:relative;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);transition:background .7s ease}
-  .counter-section::before{content:"";position:absolute;left:50%;top:0;width:min(700px,90vw);height:220px;transform:translateX(-50%);background:radial-gradient(ellipse,var(--glow),transparent 68%);pointer-events:none}
-  .section-eyebrow{font-family:'Caveat',cursive;font-size:1.45rem;color:var(--accent);margin-bottom:.3rem}
-  .counter-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4.5vw,2.7rem);color:var(--heading);font-weight:500;margin-bottom:2.5rem}
-  .counter-grid{display:flex;justify-content:center;flex-wrap:wrap;gap:clamp:1rem,4vw,3rem);position:relative}
-  .counter-item{min-width:115px;padding:1.2rem .8rem;border:1px solid color-mix(in srgb,var(--accent) 16%,transparent);border-radius:18px;background:var(--surface);box-shadow:0 12px 35px var(--shadow);backdrop-filter:blur(10px)}
-  .counter-num{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(2.4rem,7vw,4rem);color:var(--accent);font-variant-numeric:tabular-nums;line-height:1}
-  .counter-label{margin-top:.5rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);opacity:.72}
-
-  /* GALLERY */
-  .gallery-section{padding:2rem 0 7rem;background:var(--bg);transition:background .7s ease}
-  .gallery-head{text-align:center;padding:0 1.5rem 3.5rem}
-  .gallery-head h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.1rem,5.5vw,3.3rem);color:var(--heading);font-weight:500}
-  .gallery-head::after{content:"♡";display:block;color:var(--accent2);font-size:1.4rem;margin-top:.5rem}
-  .film-strip{display:flex;flex-direction:column;gap:clamp(3rem,8vw,6rem);max-width:1000px;margin:0 auto;padding:0 1.5rem}
-  .frame{position:relative;width:100%;display:flex;justify-content:center}
-  .frame:nth-child(even){justify-content:flex-end}.frame:nth-child(3n){justify-content:flex-start}
-  .polaroid{
-    position:relative;
-    z-index:2;
-    background:var(--surface);
-    padding:14px 14px 46px;
-    box-shadow:0 22px 50px -14px var(--shadow);
-    max-width:380px;
-    width:82%;
-    opacity:0;
-    transform:translateY(40px) rotate(var(--rot,0deg));
-    transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.3,1),background .6s ease,box-shadow .6s ease;
-    border:1px solid color-mix(in srgb,var(--accent) 12%,transparent);
-    backdrop-filter:blur(8px);
-  }
-  .polaroid.visible{opacity:1;transform:translateY(0) rotate(var(--rot,0deg))}
-  .polaroid:hover{box-shadow:0 28px 65px -16px var(--shadow);transform:translateY(-4px) rotate(var(--rot,0deg))}
-  .polaroid img{display:block;width:100%;height:auto;filter:saturate(1.03) contrast(1.02);border-radius:1px}
-  .polaroid figcaption{font-family:'Caveat',cursive;font-size:1.35rem;color:var(--accent);text-align:center;margin-top:10px;line-height:1.1}
-  .frame:nth-child(4n+1) .polaroid{--rot:-3.5deg}.frame:nth-child(4n+2) .polaroid{--rot:2.5deg}.frame:nth-child(4n+3) .polaroid{--rot:-2deg}.frame:nth-child(4n+4) .polaroid{--rot:3deg}
-
-  /* LETTER */
-  .letter-section{
-    position:relative;padding:7rem 1.5rem 8rem;text-align:center;overflow:hidden;
-    background:
-      radial-gradient(circle at 50% 0%,var(--glow),transparent 42%),
-      linear-gradient(160deg,var(--bg2),var(--bg));
-    transition:background .7s ease;
-  }
-  .letter-section::before{content:"✦";position:absolute;top:8%;left:8%;font-size:1.3rem;color:var(--gold);opacity:.55}
-  .letter-section::after{content:"✦";position:absolute;bottom:10%;right:9%;font-size:1.1rem;color:var(--gold);opacity:.45}
-  .letter-mark{font-family:'Caveat',cursive;font-size:3rem;color:var(--accent);margin-bottom:1rem;opacity:0;transform:translateY(20px);transition:opacity .9s ease,transform .9s ease}
-  .letter-mark.visible{opacity:1;transform:translateY(0)}
-  .letter-body{max-width:62ch;margin:0 auto;font-family:'Cormorant Garamond',serif;font-size:clamp(1.15rem,2.6vw,1.6rem);line-height:1.75;color:var(--heading);font-weight:500;opacity:0;transform:translateY(25px);transition:opacity 1.1s ease .15s,transform 1.1s ease .15s}
-  .letter-body.visible{opacity:1;transform:translateY(0)}
-  .letter-body .drop{float:left;font-size:3.6rem;line-height:.8;padding:.1rem .12rem 0 0;font-weight:600;color:var(--accent)}
-  .letter-sign{margin-top:3rem;font-family:'Caveat',cursive;font-size:2.2rem;color:var(--accent);opacity:0;transform:translateY(20px);transition:opacity 1s ease .4s,transform 1s ease .4s}
-  .letter-sign.visible{opacity:1;transform:translateY(0)}
-  .letter-heart{margin-top:2.5rem;font-size:2rem;color:var(--accent2);opacity:0;transition:opacity 1s ease .6s}
-  .letter-heart.visible{opacity:1}
-
-  footer{padding:3rem 1.5rem 3.5rem;text-align:center;background:var(--bg);transition:background .7s ease}
-  footer .names{font-family:'Caveat',cursive;font-size:1.8rem;color:var(--accent)}
-  footer .date{margin-top:.4rem;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);opacity:.6}
-  footer .little{margin-top:1rem;font-size:.75rem;color:var(--accent2);opacity:.8}
-
-  @media (max-width:640px){
-    .theme-toggle{right:13px;top:13px;width:44px;height:44px}
-    .frame,.frame:nth-child(even),.frame:nth-child(3n){justify-content:center}
-    .polaroid{width:88%}
-    .counter-grid{gap:.7rem}
-    .counter-item{min-width:calc(50% - .7rem)}
-  }
-  @media (prefers-reduced-motion:reduce){
-    *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
-  }
-
-</style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#190f14"><meta name="description" content="Um álbum de nós. As lembranças, o tempo e todo o amor de Everton pela Júlia.">
+<title>Para o meu amorzinho</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"><script src="app.js" defer></script>
 </head>
 <body>
-
-<div class="ambient-particles" id="ambientParticles" aria-hidden="true"></div>
-
-<button class="theme-toggle" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">
-  <span class="moon">☾</span><span class="sun">☀</span>
-</button>
-<div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-
-<section class="hero" id="hero">
-  <p class="hero-eyebrow">Para mostrar o meu amor pela Júlia ♡</p>
-  <h1 class="hero-title">
-    <span class="number" id="heroNumber">2</span> 
-    <span class="months" id="heroMonthsWord">meses</span>
-    <span class="dream">E ainda parece <em>um sonho</em></span>
-  </h1>
-  <p class="hero-sub">Um lugar só nosso, com um pouquinho de tudo que a gente já viveu — e tudo que ainda vem pela frente.</p>
-  <div class="hero-badge"><span id="heroMonths">02</span> meses de nós ♡</div>
-  <div class="hero-scroll"><div class="line"></div><span>role para ver</span></div>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="reading-progress" aria-hidden="true"><span id="progress"></span></div>
+<header class="site-header wrap"><a class="monogram" href="#inicio" aria-label="Everton e Júlia, início">E<span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg></span>J</a><span class="header-note">Feito de nós dois</span><nav aria-label="Navegação principal"><a href="#tempo">Nós</a><a href="#lembrancas">Lembranças</a><a href="#carta">Para você</a></nav><button id="theme" class="theme-button" type="button" aria-label="Ativar tema claro" title="Ativar tema claro"><span aria-hidden="true" id="theme-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg></span></button></header>
+<main id="conteudo">
+<section id="inicio" class="hero wrap">
+<div class="hero-copy"><p class="eyebrow"><span class="tiny-line"></span> Para a Júlia, com amor</p><h1>O meu lugar<br>favorito é<br><em>com você.</em></h1><p class="hero-description">Um pouquinho de tudo o que a gente já viveu.<br class="desktop-break"> E de tudo o que ainda vem pela frente.</p><a class="text-link" href="#lembrancas">Nossas lembranças <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg></a><div class="hero-date"><span class="date-dot"></span><span>Everton & Júlia</span><span class="date-rule"></span><time datetime="2026-07-03">Desde 03.07.2026</time></div></div>
+<div class="hero-art"><span class="photo-orbit" aria-hidden="true"></span><span class="art-star" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg></span><figure class="hero-portrait"><img src="photos/p01.jpg" alt="Everton e Júlia juntos na ponte, cercados de árvores" fetchpriority="high" width="960" height="1280"><figcaption>Sou fã desse casal.</figcaption></figure><figure class="hero-snapshot"><img src="photos/p04.jpg" alt="Uma selfie de Everton e Júlia" width="1599" height="899"><figcaption>E ainda parece um sonho ♡</figcaption></figure></div>
 </section>
-
-<section class="counter-section">
-  <p class="section-eyebrow">Desde que a gente começou</p>
-  <h2 class="counter-title">Cada segundo ao seu lado conta</h2>
-  <div class="counter-grid">
-    <div class="counter-item"><div class="counter-num" id="c-days">00</div><div class="counter-label">dias</div></div>
-    <div class="counter-item"><div class="counter-num" id="c-hours">00</div><div class="counter-label">horas</div></div>
-    <div class="counter-item"><div class="counter-num" id="c-min">00</div><div class="counter-label">minutos</div></div>
-    <div class="counter-item"><div class="counter-num" id="c-sec">00</div><div class="counter-label">segundos</div></div>
-  </div>
-  <p class="counter-calendar"><strong id="c-months">00</strong> meses e <strong id="c-rem-days">00</strong> dias juntos ♡</p>
-</section>
-
-<section class="gallery-section">
-  <div class="gallery-head">
-    <p class="section-eyebrow">Dois meses de histórias</p>
-    <h2>Lembranças nossas</h2>
-  </div>
-  <div class="film-strip" id="filmStrip">
-    <div class="frame"><figure class="polaroid"><img src="photos/p04.jpg" alt="Everton e Júlia"><figcaption>Um dia no estilo dorama</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p01.jpg" alt="Everton e Júlia na ponte"><figcaption>Lugar legal, companhia incrível</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p02.jpg" alt="Everton e Júlia na cachoeira"><figcaption>A paz que reina em mim vem de você</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p14.jpg" alt="Everton e Júlia no carro"><figcaption>Caminhos diferentes, mas mesma direção</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p05.jpg" alt="abraço"><figcaption>Seu abraço é o meu descanso</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p07.jpg" alt="beijo no rosto sob guarda-chuvas"><figcaption>Eu ficaria assim por horas hehe</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p08.jpg" alt="sorrindo juntos"><figcaption>Meu rosto fala pelo visto kkk</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p06.jpg" alt="selfie no espelho"><figcaption>Eu amo tanto essa foto, impressionante!</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p09.jpg" alt="coração com as mãos"><figcaption>Que dia bom, amo-te amor</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p11.jpg" alt="teatro"><figcaption>Nossa filha hehe</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p12.jpg" alt="filtro de cachorro"><figcaption>Eu fico hipnotizado nos seus olhos.</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p03.jpg" alt="close juntos"><figcaption>No estilo dark romance.</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p15.jpg" alt="nova lembrança"><figcaption>Frio na montanha, calor no meu Coração ♡</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p16.jpg" alt="nova lembrança"><figcaption>Eu amo nossa família</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p17.jpg" alt="nova lembrança"><figcaption>Amo minha nadadora!</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p18.jpg" alt="nova lembrança"><figcaption>Sua companhia faz o esforço valer a pena!</figcaption></figure></div>
-    <div class="frame"><figure class="polaroid"><img src="photos/p19.jpg" alt="nova lembrança"><figcaption>Te esperaria 4 horas para te ver por 30 minutos.</figcaption></figure></div>
-  </div>
-</section>
-
-<section class="letter-section">
-  <p class="letter-mark">Para o meu amor ♡</p>
-  <p class="letter-body"><span class="drop">T</span>odo tempo nos parece pouco. Eu viveria a eternidade ao seu lado, mas te conheço há 2 meses e já parece que faz anos. Te amo muito. Eu diria que te amo há anos, pois nos meus sonhos mais lindos aparecia uma linda moça que eu não podia ver. E então, aos meus 17 anos, conheci o amor da minha vida: a pessoa que nem precisou fazer esforço e já tomou meu coração.</p>
-  <p class="letter-sign">Com todo o carinho, do seu amor: Everton</p>
-  <p class="letter-heart">♡</p>
-</section>
-
-<footer>
-  <p class="names">Everton &amp; Júlia</p>
-  <p class="date">2 meses de nós • feito com amor</p>
-  <p class="little">e que venham muitos outros capítulos ✦</p>
-</footer>
-
-<script>
-  // Tema claro/escuro — a escolha fica salva no navegador.
-  const themeToggle = document.getElementById('themeToggle');
-  const savedTheme = localStorage.getItem('julia-theme');
-  if(savedTheme !== 'light') document.body.classList.add('dark');
-
-  themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-    localStorage.setItem('julia-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-  });
-
-  // Barra de progresso
-  const fill = document.getElementById('progressFill');
-  function updateProgress(){
-    const h = document.documentElement;
-    const total = h.scrollHeight - h.clientHeight;
-    fill.style.width = (total > 0 ? (h.scrollTop / total * 100) : 0) + '%';
-  }
-  document.addEventListener('scroll', updateProgress, {passive:true});
-  updateProgress();
-
-  // Animações ao entrar na tela
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting) entry.target.classList.add('visible');
-    });
-  }, {threshold:.2});
-  document.querySelectorAll('.polaroid,.letter-mark,.letter-body,.letter-sign,.letter-heart')
-    .forEach(el=>observer.observe(el));
-
-  // Data de início do namoro. O contador e o título dos meses são automáticos.
-  // Altere somente esta data se algum dia precisar corrigir o início.
-  const startDate = new Date('2026-07-03T00:00:00');
-
-  function calendarMonthsAndDays(start, end){
-    if(end < start) return {months:0, days:0};
-    let months = (end.getFullYear() - start.getFullYear()) * 12
-               + (end.getMonth() - start.getMonth());
-
-    let anchor = new Date(start);
-    anchor.setMonth(anchor.getMonth() + months);
-
-    if(anchor > end){
-      months--;
-      anchor = new Date(start);
-      anchor.setMonth(anchor.getMonth() + months);
-    }
-
-    const days = Math.floor((end - anchor) / 86400000);
-    return {months, days};
-  }
-
-  function updateCounter(){
-    const now=new Date();
-    let diff=now-startDate;
-    if(diff<0) diff=0;
-
-    const sec=Math.floor(diff/1000);
-    const days=Math.floor(sec/86400);
-    const hours=Math.floor((sec%86400)/3600);
-    const min=Math.floor((sec%3600)/60);
-    const s=sec%60;
-
-    document.getElementById('c-days').textContent=String(days).padStart(2,'0');
-    document.getElementById('c-hours').textContent=String(hours).padStart(2,'0');
-    document.getElementById('c-min').textContent=String(min).padStart(2,'0');
-    document.getElementById('c-sec').textContent=String(s).padStart(2,'0');
-
-    const calendar = calendarMonthsAndDays(startDate, now);
-    document.getElementById('c-months').textContent=String(calendar.months);
-    document.getElementById('c-rem-days').textContent=String(calendar.days);
-    document.getElementById('heroMonths').textContent=String(calendar.months).padStart(2,'0');
-    document.getElementById('heroNumber').textContent=String(calendar.months);
-    document.getElementById('heroMonthsWord').textContent=calendar.months === 1 ? 'MÊS' : 'MESES';
-  }
-  updateCounter();
-  setInterval(updateCounter,1000);
-
-  // Elementos ambientes do site inteiro: corações no escuro, pétalas no claro.
-  const ambient = document.getElementById('ambientParticles');
-  const ambientCount = window.innerWidth < 640 ? 10 : 17;
-  for(let i=0;i<ambientCount;i++){
-    const p=document.createElement('span');
-    p.className='ambient-particle';
-    p.style.setProperty('--left',(Math.random()*100)+'%');
-    p.style.setProperty('--size',(10+Math.random()*12)+'px');
-    p.style.setProperty('--duration',(13+Math.random()*12)+'s');
-    p.style.setProperty('--delay',(-Math.random()*18)+'s');
-    p.style.setProperty('--drift',((Math.random()-.5)*100)+'px');
-    p.style.setProperty('--rotation',((Math.random()-.5)*90)+'deg');
-    ambient.appendChild(p);
-  }
-</script>
-</body>
-</html>
+<p class="together-note wrap"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg> <span>E ainda parece um sonho.</span></p>
+<section id="tempo" class="time-section wrap reveal"><div class="time-heading"><p class="eyebrow">O nosso tempo juntos</p><h2>Cada segundo <br>ao seu lado <em>conta.</em></h2><p class="calendar-line"><span data-month-phrase>— meses</span> e <span id="remaining-days">— dias</span> juntos.</p></div><div class="clock" aria-label="Tempo total de relacionamento"><div><span id="days" class="clock-number">—</span><span class="clock-label">DIAS</span></div><span class="clock-dot" aria-hidden="true">:</span><div><span id="hours" class="clock-number">—</span><span class="clock-label">HORAS</span></div><span class="clock-dot" aria-hidden="true">:</span><div><span id="minutes" class="clock-number">—</span><span class="clock-label">MINUTOS</span></div><span class="clock-dot" aria-hidden="true">:</span><div><span id="seconds" class="clock-number">—</span><span class="clock-label">SEGUNDOS</span></div><p class="clock-footnote">O tempo passa. O amor fica.</p></div></section>
+<section id="lembrancas" class="gallery-section wrap"><div class="gallery-heading reveal"><div><p class="eyebrow">As nossas lembranças</p><h2>Pedacinhos <em>de nós.</em></h2></div><p>Algumas fotos que eu amo.<br>O meu jeito favorito de guardar memórias.<span class="handwritten">Para ver de pertinho, toque na foto.</span></p></div><div class="gallery" id="gallery"><figure class="memory reveal"><button class="photo-button" type="button" data-photo="0" aria-label="Ampliar foto: Um dia no estilo dorama"><img src="photos/p04.jpg" alt="Everton e Júlia" loading="lazy" decoding="async" width="1599" height="899"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">01</span><span>Um dia no estilo dorama</span></figcaption></figure>
+<figure class="memory reveal"><button class="photo-button" type="button" data-photo="1" aria-label="Ampliar foto: Lugar legal, companhia incrível"><img src="photos/p01.jpg" alt="Everton e Júlia na ponte" loading="lazy" decoding="async" width="960" height="1280"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">02</span><span>Lugar legal, companhia incrível</span></figcaption></figure>
+<figure class="memory reveal"><button class="photo-button" type="button" data-photo="2" aria-label="Ampliar foto: A paz que reina em mim vem de você"><img src="photos/p02.jpg" alt="Everton e Júlia na cachoeira" loading="lazy" decoding="async" width="960" height="1280"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">03</span><span>A paz que reina em mim vem de você</span></figcaption></figure>
+<figure class="memory reveal"><button class="photo-button" type="button" data-photo="3" aria-label="Ampliar foto: Caminhos diferentes, mas mesma direção"><img src="photos/p14.jpg" alt="Everton e Júlia no carro" loading="lazy" decoding="async" width="899" height="1599"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">04</span><span>Caminhos diferentes, mas mesma direção</span></figcaption></figure>
+<figure class="memory reveal"><button class="photo-button" type="button" data-photo="4" aria-label="Ampliar foto: Seu abraço é o meu descanso"><img src="photos/p05.jpg" alt="abraço" loading="lazy" decoding="async" width="960" height="1280"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">05</span><span>Seu abraço é o meu descanso</span></figcaption></figure>
+<figure class="memory reveal"><button class="photo-button" type="button" data-photo="5" aria-label="Ampliar foto: Eu ficaria assim por horas hehe"><img src="photos/p07.jpg" alt="beijo no rosto sob guarda-chuvas" loading="lazy" decoding="async" width="1200" height="1600"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">06</span><span>Eu ficaria assim por horas hehe</span></figcaption></figure>
+<figure class="memory reveal extra" hidden><button class="photo-button" type="button" data-photo="6" aria-label="Ampliar foto: Meu rosto fala pelo visto kkk"><img src="photos/p08.jpg" alt="sorrindo juntos" loading="lazy" decoding="async" width="1200" height="1600"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">07</span><span>Meu rosto fala pelo visto kkk</span></figcaption></figure>
+<figure class="memory reveal extra" hidden><button class="photo-button" type="button" data-photo="7" aria-label="Ampliar foto: Eu amo tanto essa foto, impressionante!"><img src="photos/p06.jpg" alt="selfie no espelho" loading="lazy" decoding="async" width="899" height="1599"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">08</span><span>Eu amo tanto essa foto, impressionante!</span></figcaption></figure>
+<figure class="memory reveal extra" hidden><button class="photo-button" type="button" data-photo="8" aria-label="Ampliar foto: Que dia bom, amo-te amor"><img src="photos/p09.jpg" alt="coração com as mãos" loading="lazy" decoding="async" width="1200" height="1600"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">09</span><span>Que dia bom, amo-te amor</span></figcaption></figure>
+<figure class="memory reveal extra" hidden><button class="photo-button" type="button" data-photo="9" aria-label="Ampliar foto: Nossa filha hehe"><img src="photos/p11.jpg" alt="teatro" loading="lazy" decoding="async" width="900" height="1600"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">10</span><span>Nossa filha hehe</span></figcaption></figure>
+<figure class="memory reveal extra" hidden><button class="photo-button" type="button" data-photo="10" aria-label="Ampliar foto: Eu fico hipnotizado nos seus olhos."><img src="photos/p12.jpg" alt="filtro de cachorro" loading="lazy" decoding="async" width="1599" height="899"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">11</span><span>Eu fico hipnotizado nos seus olhos.</span></figcaption></figure>
+<figure class="memory reveal extra" hidden><button class="photo-button" type="button" data-photo="11" aria-label="Ampliar foto: No estilo dark romance."><img src="photos/p03.jpg" alt="close juntos" loading="lazy" decoding="async" width="1599" height="899"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">12</span><span>No estilo dark romance.</span></figcaption></figure>
+<figure class="memory reveal extra" hidden><button class="photo-button" type="button" data-photo="12" aria-label="Ampliar foto: Frio na montanha, calor no meu Coração ♡"><img src="photos/p15.jpg" alt="nova lembrança" loading="lazy" decoding="async" width="1200" height="1600"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">13</span><span>Frio na montanha, calor no meu Coração ♡</span></figcaption></figure>
+<figure class="memory reveal extra" hidden><button class="photo-button" type="button" data-photo="13" aria-label="Ampliar foto: Eu amo nossa família"><img src="photos/p16.jpg" alt="nova lembrança" loading="lazy" decoding="async" width="720" height="1280"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">14</span><span>Eu amo nossa família</span></figcaption></figure>
+<figure class="memory reveal extra" hidden><button class="photo-button" type="button" data-photo="14" aria-label="Ampliar foto: Amo minha nadadora!"><img src="photos/p17.jpg" alt="nova lembrança" loading="lazy" decoding="async" width="1164" height="1552"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">15</span><span>Amo minha nadadora!</span></figcaption></figure>
+<figure class="memory reveal extra" hidden><button class="photo-button" type="button" data-photo="15" aria-label="Ampliar foto: Sua companhia faz o esforço valer a pena!"><img src="photos/p18.jpg" alt="nova lembrança" loading="lazy" decoding="async" width="899" height="1599"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">16</span><span>Sua companhia faz o esforço valer a pena!</span></figcaption></figure>
+<figure class="memory reveal extra" hidden><button class="photo-button" type="button" data-photo="16" aria-label="Ampliar foto: Te esperaria 4 horas para te ver por 30 minutos."><img src="photos/p19.jpg" alt="nova lembrança" loading="lazy" decoding="async" width="899" height="1599"><span class="photo-open" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></button><figcaption><span class="photo-index">17</span><span>Te esperaria 4 horas para te ver por 10 minutos.</span></figcaption></figure></div><div class="gallery-more"><button id="more" class="outline-button" type="button" aria-expanded="false" aria-controls="gallery">Mais um pouco de nós <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14m-6-6 6 6 6-6"/></svg></button><p>Cada uma com um pedacinho de nós.</p></div></section>
+<section class="quote-section reveal"><div class="wrap"><span aria-hidden="true" class="quote-heart"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg></span><blockquote>Algo que nunca acaba?<br>O nosso <em>amor.</em></blockquote><p>Em você, sinto paz.</p></div></section>
+<section id="carta" class="letter-section wrap"><div class="letter-heading reveal"><p class="eyebrow">Amorzinho:</p><h2>Algumas coisas <br>só cabem <em>numa carta.</em></h2><p>Um pouco do que eu sinto.<br>Todo o carinho que eu quero dar.</p></div><details class="letter reveal" id="letter"><summary><span class="envelope-lines" aria-hidden="true"></span><span class="envelope-to">Para Júlia:</span><span class="envelope-note">Com todo o meu amor.</span><span class="wax-seal" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg></span><span class="letter-action">Abrir minha carta <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></span></summary><article class="letter-paper"><p class="letter-date">Uma carta do seu amorzinho</p><h3>Para o você, meu amor:</h3><p>Escrevendo para uma pessoa que me encontrou quanto eu estava quase desistindo de ser bom, quando eu comecei a buscar a Deus para não me perder e não me entristecer, tive que aprender sozinho a como respeitar, como ser romântico, como ser educado, gentil e várias coisas boas, fui perceber depois de te conhecer o quanto sou grato por ser assim, eu sei que se fosse alguém ruim não te mereceria, porque eu posso ser o cara mais romântico do mundo, mas você que faz as melhores cartinhas, eu posso ser o cara mais feliz, você sempre consegue aumentar minha felicidade, eu posso estar muito preocupado, você arruma um jeito de me deixar mais feliz. Eu quero dizer que com você meus dias ficaram melhores, que sua presença ilumina, que seu jeito me alegra e seu olhar me fascina.<br>Uma vez eu parei para pensar como seria o nosso relacionamento para o resto da vida e então eu percebi que nós somos muito felizes, isso ia fazer várias pessoas se incomodarem, pois no final das contas, tem gente que parece ter tudo mais ainda quer ser nós, eu sei que vai ser difícil daqui para frente, pois lutar contra a inveja e contra as mentiras e o ódio que vão despejar sobre nós não é fácil, mas eu tenho certeza que vamos passar por isso juntos, vamos viver felizes e vamos buscar Deus para que ele mostre o quão especial somos, porque no princípio Deus estava, e no fim Deus estará.<br>No começo do nosso namoro Deus se fez presente, ao passar do tempo estou cada vez sentindo mais ele, sei que no fim, pode ser fim da tristeza, fim do ano, fim da risada, fim do sono, toda hora começamos algo novo, mesmo que seja no fim dos hinos que você toca, ele está presente para nós e nos ajuda, Deus está em tudo e você está no meu coração.<br>Júlia! Eu te amo, sempre estarei aqui, sempre te amarei, ainda acho que vai ter muita inveja sobre nós, vamos lutar contra isso juntos e felizes!<br>Fica aqui a descrição do meu amor que já faz <span data-month-phrase> meses</span> que só aumenta, eu te amo por hoje e sempre.<br> Deus seja na nossa vida para nós podermos se amar muito!<br>Amém!</p><p class="signature">Com todo o carinho, do seu amor:<br><span>Everton</span> ♡</p></article></details></section>
+</main>
+<footer><div class="wrap footer-inner"><a class="footer-names" href="#inicio">Everton <em>&</em> Júlia</a><p><span data-month-phrase>— meses</span> de nós. E muitos capítulos pela frente.</p><a href="#inicio" class="back-top" aria-label="Voltar ao início"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></a><span class="footer-note">Feito com amor, para o meu amor.</span><span class="footer-date">03.07.2026 — e contando ♡</span></div></footer>
+<dialog id="lightbox" class="lightbox" aria-label="Fotografia ampliada"><div class="viewer"><div class="viewer-topbar"><span class="viewer-title"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg> Uma lembrança nossa</span><span id="photo-count"></span><button id="close-photo" class="icon-button viewer-close" aria-label="Fechar fotografia" type="button"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button></div><div class="viewer-stage"><button id="previous" class="icon-button viewer-arrow" aria-label="Foto anterior" type="button"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button><div class="viewer-image"><img id="full-photo" alt=""><span id="photo-status" role="status"></span></div><button id="next" class="icon-button viewer-arrow" aria-label="Próxima foto" type="button"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div><p id="photo-caption"></p></div></dialog>
+</body></html>
